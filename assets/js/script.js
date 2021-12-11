@@ -13,32 +13,39 @@ var firstComplete = 0;
 var firstQuestion = {
     title: "This is question 1",
     name: "This is the question",
-    options: ["a", "b", "c", "correct"]
+    options: ["a", "b", "c"],
+    correct: "d"
+
 }
 var secondQuestion = {
     title: "This is question 2",
     name: "Here is the question text",
-    options: ["a", "b", "c", "correct"]
+    options: ["a", "b", "c"],
+    correct: "d"
 }
 var thirdQuestion = {
     title: "This is question 3",
     name: "Here is the question text",
-    options: ["a", "b", "c", "correct"]
+    options: ["a", "b", "c"],
+    correct: "d"
 }
 var fourthQuestion = {
     title: "This is question 4",
     name: "Here is the question text",
-    options: ["a", "b", "c", "correct"]
+    options: ["a", "b", "c"],
+    correct: "d"
 }
 var fifthQuestion = {
     title: "This is question 5",
     name: "Here is the question text",
-    options: ["a", "b", "c", "correct"]
+    options: ["a", "b", "c"],
+    correct: "d"
 }
 var sixthQuestion = {
     title: "This is question 6",
     name: "Here is the question text",
-    options: ["a", "b", "c", "correct"]
+    options: ["a", "b", "c"],
+    correct: "d"
 }
 
 //combine questions into an array
@@ -49,22 +56,22 @@ function startQuiz() {
     //shuffle questoin order
     shuffle(questionsArray);
     console.log(questionsArray);
-    quizQuestions(questionsArray[0]);
+    quizQuestionsGen(questionsArray[0]);
 
-    quizQuestions(questionsArray[1]);
+    quizQuestionsGen(questionsArray[1]);
 
-    quizQuestions(questionsArray[2]);
+    quizQuestionsGen(questionsArray[2]);
 
-    quizQuestions(questionsArray[3]);
+    quizQuestionsGen(questionsArray[3]);
 
-    quizQuestions(questionsArray[4]);
+    quizQuestionsGen(questionsArray[4]);
 
-    quizQuestions(questionsArray[5]);
+    quizQuestionsGen(questionsArray[5]);
 
 }
 
 // function to generate questions with question parameter (enter the name of the variable)
-function quizQuestions(question) {
+function quizQuestionsGen(question) {
     // use a counter to stop removeChild from happening more than once
     firstComplete++;
     if (firstComplete === 1) {
@@ -73,9 +80,11 @@ function quizQuestions(question) {
     quizTitle.textContent = question.title;
     quizP.textContent = question.name;
     
+    // combine wrong answers with correct
+    createOptionsArray(question);
 
     // shuffle answers
-    shuffle(question.options)
+    shuffle(question.options);
 
     // create answer elements
     // answer a
@@ -97,6 +106,14 @@ function quizQuestions(question) {
     return;
 }
 
+function answerValidation() {
+    
+}
+
+function createOptionsArray(answers) {
+    answers.options.push(answers.correct);
+    console.log(answers.options);
+}
 
 function shuffle(array) {
     for (let i = array.length-1; i > 0; i--) {
