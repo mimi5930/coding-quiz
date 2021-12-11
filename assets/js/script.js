@@ -10,10 +10,13 @@ var quizP = document.querySelector(".quiz-descrip");
 var firstQuestion = {
     title: "This is question 1",
     name: "This is the question",
-    optionA: "a",
-    optionB: "b",
-    optionC: "c",
-    optionCorrect: "correct",
+    options: ["a", "b", "c", "correct"]
+}
+
+var secondQuestion = {
+    title: "This is question 2",
+    name: "Here is the question text",
+    options: ["a", "b", "c", "correct"]
 }
 
 function startQuiz() {
@@ -29,22 +32,26 @@ function quizQustions() {
     // create answer elements
     // answer a
     var firstOption = document.createElement("button");
-    firstOption.textContent = firstQuestion.optionA;
+    firstOption.textContent = firstQuestion.options[0];
     quizGame.appendChild(firstOption)
     // answer b
     var secondOption = document.createElement("button");
-    secondOption.textContent = firstQuestion.optionB;
+    secondOption.textContent = firstQuestion.options[1];
     quizGame.appendChild(secondOption);
     // answer c
     var thirdOption = document.createElement("button");
-    thirdOption.textContent = firstQuestion.optionC;
+    thirdOption.textContent = firstQuestion.options[2];
     quizGame.appendChild(thirdOption);
     // correct answer
     var correctOption = document.createElement("button");
-    correctOption.textContent = firstQuestion.optionCorrect;
+    correctOption.textContent = firstQuestion.options[3];
     quizGame.appendChild(correctOption);
+
+    // randomize answers
+
     return;
 }
+
 
 // eventlistener for start quiz button
 quizButton.addEventListener("click", startQuiz);
