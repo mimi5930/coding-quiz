@@ -92,59 +92,66 @@ function quizQuestionsGen(question) {
     // shuffle answers
     shuffle(question.options);
 
-    // create answer elements container
-    var buttonContainer = document.createElement("div")
     // answer a
     var firstOption = document.createElement("button");
-    firstOption.setAttribute("id", 1)
+    firstOption.setAttribute("id", 0)
     firstOption.textContent = question.options[0];
     quizGame.appendChild(firstOption)
     // answer b
     var secondOption = document.createElement("button");
-    secondOption.setAttribute("id", 2)
+    secondOption.setAttribute("id", 1)
     secondOption.textContent = question.options[1];
     quizGame.appendChild(secondOption);
     // answer c
     var thirdOption = document.createElement("button");
-    thirdOption.setAttribute("id", 3)
+    thirdOption.setAttribute("id", 2)
     thirdOption.textContent = question.options[2];
     quizGame.appendChild(thirdOption);
     // correct answer
     var fourthOption = document.createElement("button");
-    fourthOption.setAttribute("id", 4)
+    fourthOption.setAttribute("id", 3)
     fourthOption.textContent = question.options[3];
     quizGame.appendChild(fourthOption);
+    return question;
 }
 
 function clickDirect(event) {
+    if(event.target.id == 0) {
+        console.log("you've chosen option 1")
+        var chosenAnswer = questionsArray[0].options[event.target.id]
+        console.log("your answer is " + chosenAnswer);
+    }
     if(event.target.id == 1) {
-        var answer = 1;
-        answerValidation(answer);
+        console.log("you've chosen option 2 ")
+        var chosenAnswer = questionsArray[0].options[event.target.id]
+        console.log("your answer is " + chosenAnswer);
     }
     if(event.target.id == 2) {
-        var answer = 2;
-        answerValidation(answer);
+        console.log("you've chosen option 3")
+        var chosenAnswer = questionsArray[0].options[event.target.id]
+        console.log("your answer is " + chosenAnswer);
     }
     if(event.target.id == 3) {
-        var answer = 3;
-        answerValidation(answer);
-    }
-    if(event.target.id == 4) {
-        var answer = 4;
-        answerValidation(answer);
+        console.log("you've chosen option 4")
+        var chosenAnswer = questionsArray[0].options[event.target.id]
+        console.log("your answer is " + chosenAnswer);
     }
 }
 
-function answerValidation(answer) {
-    console.log("it worked! your answer was option " + answer);
-    console.log("the right answer is " + questionsArray[0].correct)
+// function answerValidation(answer) {
+//     console.log("it worked! your answer was option " + answer);
+//     console.log("the right answer is " + questionsArray[0].correct);
+//     //connect clicked answer to 
 
-    // start here
+//     //compare clicked answer with real answer
 
-    // if (question.options[answer] = question.correct) {
-    //     console.log("that was correct!");
-    // }
-}
+//     var clickedAnswer = answer
+//     // start here
+
+//     // if (question.options[answer] = question.correct) {
+//     //     console.log("that was correct!");
+//     // }
+// }
 
 function createOptionsArray(answers) {
     answers.options.push(answers.correct);
