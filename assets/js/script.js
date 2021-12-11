@@ -5,6 +5,7 @@ var highscoresRef = document.querySelector("#highscores-ref");
 var timeDisplay = document.querySelector("#time-display");
 var quizTitle = document.querySelector(".quiz-title");
 var quizP = document.querySelector(".quiz-descrip");
+var divEl = document.querySelector(".button-container")
 
 // variable to see if you're past the first question
 var quizCounter = 0;
@@ -53,105 +54,126 @@ var questionsArray = [firstQuestion, secondQuestion, thirdQuestion, fourthQuesti
 
 function startQuiz() {
     console.log("the quiz has started!");
-    //shuffle questoin order
+    //shuffle question order
     if(quizCounter === 0) {
         shuffle(questionsArray);
         console.log(questionsArray);
     }
-    quizQuestionsGen(questionsArray[0]);
-
-    return;
-
-    quizQuestionsGen(questionsArray[1]);
-
-    quizQuestionsGen(questionsArray[2]);
-
-    quizQuestionsGen(questionsArray[3]);
-
-    quizQuestionsGen(questionsArray[4]);
-
-    quizQuestionsGen(questionsArray[5]);
-
+    quizQuestionsGen();
 }
 
 // function to generate questions with question parameter (enter the name of the variable)
-function quizQuestionsGen(question) {
-    // use a counter to stop removeChild from happening more than once
-    if (quizCounter === 0) {
-     quizGame.removeChild(quizButton);   
+function quizQuestionsGen() {
+    // use counter to determine if all questions are answered
+    if (quizCounter === questionsArray.length) {
+        alert('all done!');
+        removeChildElements(divEl);
+        return;
     }
-    quizCounter++;
+    console.log("this is the " + quizCounter + " round!");
+
+    removeChildElements(divEl);
 
     // update question number and question
-    quizTitle.textContent = question.title;
-    quizP.textContent = question.name;
+    quizTitle.textContent = questionsArray[quizCounter].title;
+    quizP.textContent = questionsArray[quizCounter].name;
     
     // combine wrong answers with correct
-    createOptionsArray(question);
+    createOptionsArray(questionsArray[quizCounter]);
 
     // shuffle answers
-    shuffle(question.options);
+    shuffle(questionsArray[quizCounter].options);
 
     // answer a
     var firstOption = document.createElement("button");
-    firstOption.setAttribute("id", 0)
-    firstOption.textContent = question.options[0];
-    quizGame.appendChild(firstOption)
+    firstOption.className = "answer-button";
+    firstOption.setAttribute("id", 0);
+    firstOption.textContent = questionsArray[quizCounter].options[0];
+    divEl.appendChild(firstOption);
     // answer b
     var secondOption = document.createElement("button");
-    secondOption.setAttribute("id", 1)
-    secondOption.textContent = question.options[1];
-    quizGame.appendChild(secondOption);
+    secondOption.className = "answer-button";
+    secondOption.setAttribute("id", 1);
+    secondOption.textContent = questionsArray[quizCounter].options[1];
+    divEl.appendChild(secondOption);
     // answer c
     var thirdOption = document.createElement("button");
-    thirdOption.setAttribute("id", 2)
-    thirdOption.textContent = question.options[2];
-    quizGame.appendChild(thirdOption);
+    thirdOption.className = "answer-button";
+    thirdOption.setAttribute("id", 2);
+    thirdOption.textContent = questionsArray[quizCounter].options[2];
+    divEl.appendChild(thirdOption);
     // correct answer
     var fourthOption = document.createElement("button");
-    fourthOption.setAttribute("id", 3)
-    fourthOption.textContent = question.options[3];
-    quizGame.appendChild(fourthOption);
-    return question;
+    fourthOption.className = "answer-button"
+    fourthOption.setAttribute("id", 3);
+    fourthOption.textContent = questionsArray[quizCounter].options[3];
+    divEl.appendChild(fourthOption);    
 }
+
 
 function clickDirect(event) {
     if(event.target.id == 0) {
         console.log("you've chosen option 1")
-        var chosenAnswer = questionsArray[0].options[event.target.id]
+        var chosenAnswer = questionsArray[quizCounter].options[event.target.id]
         console.log("your answer is " + chosenAnswer);
+        if(chosenAnswer === questionsArray[quizCounter].correct) {
+            console.log("you got it right!");
+            quizCounter++;
+            quizQuestionsGen();
+        }
+        else {
+            console.log("WRONG!");
+            quizCounter++;
+            quizQuestionsGen();
+        }
     }
     if(event.target.id == 1) {
         console.log("you've chosen option 2 ")
-        var chosenAnswer = questionsArray[0].options[event.target.id]
+        var chosenAnswer = questionsArray[quizCounter].options[event.target.id]
         console.log("your answer is " + chosenAnswer);
+        if(chosenAnswer === questionsArray[quizCounter].correct) {
+            console.log("you got it right!");
+            quizCounter++;
+            quizQuestionsGen();
+        }
+        else {
+            console.log("WRONG!");
+            quizCounter++;
+            quizQuestionsGen();
+        }
     }
     if(event.target.id == 2) {
         console.log("you've chosen option 3")
-        var chosenAnswer = questionsArray[0].options[event.target.id]
+        var chosenAnswer = questionsArray[quizCounter].options[event.target.id]
         console.log("your answer is " + chosenAnswer);
+        if(chosenAnswer === questionsArray[quizCounter].correct) {
+            console.log("you got it right!");
+            quizCounter++;
+            quizQuestionsGen();
+        }
+        else {
+            console.log("WRONG!");
+            quizCounter++;
+            quizQuestionsGen();
+        }
     }
     if(event.target.id == 3) {
         console.log("you've chosen option 4")
-        var chosenAnswer = questionsArray[0].options[event.target.id]
+        var chosenAnswer = questionsArray[quizCounter].options[event.target.id]
         console.log("your answer is " + chosenAnswer);
+        if(chosenAnswer === questionsArray[quizCounter].correct) {
+            console.log("you got it right!");
+            quizCounter++;
+            quizQuestionsGen();
+        }
+        else {
+            console.log("WRONG!");
+            quizCounter++;
+            quizQuestionsGen();
+        }
     }
 }
 
-// function answerValidation(answer) {
-//     console.log("it worked! your answer was option " + answer);
-//     console.log("the right answer is " + questionsArray[0].correct);
-//     //connect clicked answer to 
-
-//     //compare clicked answer with real answer
-
-//     var clickedAnswer = answer
-//     // start here
-
-//     // if (question.options[answer] = question.correct) {
-//     //     console.log("that was correct!");
-//     // }
-// }
 
 function createOptionsArray(answers) {
     answers.options.push(answers.correct);
@@ -164,6 +186,12 @@ function shuffle(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
+}
+
+function removeChildElements(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild)
+    }
 }
 
 
