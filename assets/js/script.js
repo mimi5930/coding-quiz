@@ -29,6 +29,9 @@ function quizQustions() {
     quizP.textContent = firstQuestion.name;
     quizGame.removeChild(quizButton);
 
+    // shuffle answers
+    shuffle(firstQuestion.options)
+
     // create answer elements
     // answer a
     var firstOption = document.createElement("button");
@@ -43,13 +46,22 @@ function quizQustions() {
     thirdOption.textContent = firstQuestion.options[2];
     quizGame.appendChild(thirdOption);
     // correct answer
-    var correctOption = document.createElement("button");
-    correctOption.textContent = firstQuestion.options[3];
-    quizGame.appendChild(correctOption);
+    var fourthOption = document.createElement("button");
+    fourthOption.textContent = firstQuestion.options[3];
+    quizGame.appendChild(fourthOption);
 
     // randomize answers
-
     return;
+
+}
+
+
+function shuffle(array) {
+    for (let i = array.length-1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
 
 
