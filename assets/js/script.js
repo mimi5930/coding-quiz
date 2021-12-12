@@ -6,9 +6,17 @@ var timeDisplay = document.querySelector("#time-display");
 var quizTitle = document.querySelector(".quiz-title");
 var quizP = document.querySelector(".quiz-descrip");
 var divEl = document.querySelector(".button-container")
+var timerEl = document.querySelector("#time-display");
 
 // variable to see if you're past the first question
 var quizCounter = 0;
+
+// final score holder
+var score = 0;
+// timer length
+var timer = -1;
+// Answered all questions?
+var gameWin = false;
 
 // Quiz questions
 var firstQuestion = {
@@ -53,24 +61,45 @@ var sixthQuestion = {
 var questionsArray = [firstQuestion, secondQuestion, thirdQuestion, fourthQuestion, fifthQuestion, sixthQuestion]
 
 function startQuiz() {
-    console.log("the quiz has started!");
     //shuffle question order
     if(quizCounter === 0) {
+        timer = 75;
         shuffle(questionsArray);
-        console.log(questionsArray);
+        countdown();
     }
     quizQuestionsGen();
+}
+
+function countdown() {
+    var timerInterval = setInterval(function() {
+        if(gameWin) {
+            clearInterval(timerInterval);            
+            gameOver();
+        }
+        else if(timer >= 1) {
+            timerEl.textContent = "Time: " + timer;
+            timer--;
+        }
+        else if(timer = 0) {
+            timerEl.textContent = "Game Over!"
+            clearInterval(timerInterval);
+            gameOver();  
+        }
+        else {
+            clearInterval(timerInterval);
+        }
+        }, 1000);
 }
 
 // function to generate questions with question parameter (enter the name of the variable)
 function quizQuestionsGen() {
     // use counter to determine if all questions are answered
     if (quizCounter === questionsArray.length) {
-        alert('all done!');
         removeChildElements(divEl);
-        return;
+        gameWin = true;
+        countdown();
     }
-    console.log("this is the " + (quizCounter + 1) + " round!");
+    else {
 
     removeChildElements(divEl);
 
@@ -107,7 +136,8 @@ function quizQuestionsGen() {
     fourthOption.className = "answer-button"
     fourthOption.setAttribute("id", 3);
     fourthOption.textContent = questionsArray[quizCounter].options[3];
-    divEl.appendChild(fourthOption);    
+    divEl.appendChild(fourthOption);
+    }
 }
 
 
@@ -117,44 +147,73 @@ function quizQuestionsGen() {
 
 function clickDirect(event) {
     if(event.target.id == 0) {
-        console.log("you've chosen option 1")
-        var chosenAnswer = questionsArray[quizCounter].options[event.target.id]
+        var chosenAnswer = questionsArray[quizCounter].options[event.target.id];
         answerValidation(chosenAnswer);
     }
     if(event.target.id == 1) {
-        console.log("you've chosen option 2 ")
-        var chosenAnswer = questionsArray[quizCounter].options[event.target.id]
+        var chosenAnswer = questionsArray[quizCounter].options[event.target.id];
         answerValidation(chosenAnswer);
     }
     if(event.target.id == 2) {
-        console.log("you've chosen option 3")
-        var chosenAnswer = questionsArray[quizCounter].options[event.target.id]
+        var chosenAnswer = questionsArray[quizCounter].options[event.target.id];
         answerValidation(chosenAnswer);
     }
     if(event.target.id == 3) {
-        console.log("you've chosen option 4")
-        var chosenAnswer = questionsArray[quizCounter].options[event.target.id]
+        var chosenAnswer = questionsArray[quizCounter].options[event.target.id];
         answerValidation(chosenAnswer);
     }
+
+    // game over options
+    if(event.target.id == 5) {
+        console.log("high score is " + score);
+        return;
+    }
+    if(event.target.id == 6) 
+        console.log("exiting!");
+        return;
 }
 
 function answerValidation(choice) {
     if(choice === questionsArray[quizCounter].correct) {
-        console.log("you got it right!");
         quizCounter++;
         quizQuestionsGen();
     }
     else {
-        console.log("WRONG!");
+        timer = timer - 15;
         quizCounter++;
+
         quizQuestionsGen();
     }
+}
+
+// end of game function
+function gameOver() {
+    gameWin = false;
+    score = timer;
+    timer = -1;
+    console.log("Game Over!")
+    timeDisplay.textContent = ""
+    quizTitle.textContent = "Game Over!"
+    quizP.textContent = "Your score is: " + score;
+    console.log(timer);
+
+    var highScoreSave = document.createElement("button");
+    highScoreSave.setAttribute("id", 5)
+    highScoreSave.className = "end-button";
+    highScoreSave.textContent = "Save High Score";
+    divEl.appendChild(highScoreSave);
+
+    var exitButton = document.createElement("button");
+    exitButton.setAttribute("id", 6)
+    exitButton.className = "end-button";
+    exitButton.textContent = "Exit";
+    divEl.appendChild(exitButton);
+    return;
 }
 
 function createOptionsArray(answers) {
     // combine correct answer with the wrong answers
     answers.options.push(answers.correct);
-    console.log(answers.options);
 }
 
 function shuffle(array) {
@@ -175,4 +234,4 @@ function removeChildElements(parent) {
 
 // eventlisteners
 quizButton.addEventListener("click", startQuiz);
-quizGame.addEventListener("click", clickDirect);
+divEl.addEventListener("click", clickDirect);
