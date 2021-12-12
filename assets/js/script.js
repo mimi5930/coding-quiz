@@ -116,71 +116,25 @@ function quizQuestionsGen() {
 
 
 function clickDirect(event) {
-    var clicked = event.target.id
-
     if(event.target.id == 0) {
         console.log("you've chosen option 1")
         var chosenAnswer = questionsArray[quizCounter].options[event.target.id]
         answerValidation(chosenAnswer);
-        // console.log("your answer is " + chosenAnswer);
-        // if(chosenAnswer === questionsArray[quizCounter].correct) {
-        //     console.log("you got it right!");
-        //     quizCounter++;
-        //     quizQuestionsGen();
-        // }
-        // else {
-        //     console.log("WRONG!");
-        //     quizCounter++;
-        //     quizQuestionsGen();
-        // }
     }
     if(event.target.id == 1) {
         console.log("you've chosen option 2 ")
         var chosenAnswer = questionsArray[quizCounter].options[event.target.id]
         answerValidation(chosenAnswer);
-        // console.log("your answer is " + chosenAnswer);
-        // if(chosenAnswer === questionsArray[quizCounter].correct) {
-        //     console.log("you got it right!");
-        //     quizCounter++;
-        //     quizQuestionsGen();
-        // }
-        // else {
-        //     console.log("WRONG!");
-        //     quizCounter++;
-        //     quizQuestionsGen();
-        // }
     }
     if(event.target.id == 2) {
         console.log("you've chosen option 3")
         var chosenAnswer = questionsArray[quizCounter].options[event.target.id]
         answerValidation(chosenAnswer);
-        // console.log("your answer is " + chosenAnswer);
-        // if(chosenAnswer === questionsArray[quizCounter].correct) {
-        //     console.log("you got it right!");
-        //     quizCounter++;
-        //     quizQuestionsGen();
-        // }
-        // else {
-        //     console.log("WRONG!");
-        //     quizCounter++;
-        //     quizQuestionsGen();
-        // }
     }
     if(event.target.id == 3) {
         console.log("you've chosen option 4")
         var chosenAnswer = questionsArray[quizCounter].options[event.target.id]
         answerValidation(chosenAnswer);
-        // console.log("your answer is " + chosenAnswer);
-        // if(chosenAnswer === questionsArray[quizCounter].correct) {
-        //     console.log("you got it right!");
-        //     quizCounter++;
-        //     quizQuestionsGen();
-        // }
-        // else {
-        //     console.log("WRONG!");
-        //     quizCounter++;
-        //     quizQuestionsGen();
-        // }
     }
 }
 
