@@ -215,10 +215,13 @@ function gameOver() {
 }
 
 function createHighScore() {
+    // reset the button-container div
     removeChildElements(divEl);
+
+    // create the input elements for submitting initials 
     var labelName = document.createElement("label");
     labelName.setAttribute("for", "player-name");
-    labelName.textContent = "Enter Name:";
+    labelName.textContent = "Enter Initials:";
     var nameEnter = document.createElement("input");
     nameEnter.setAttribute("type", "text") 
     nameEnter.setAttribute("id", "player-name") 
@@ -226,6 +229,8 @@ function createHighScore() {
     var submitButton = document.createElement("input");
     submitButton.setAttribute("type", "submit");
     submitButton.setAttribute("value", "Submit");
+
+    // append all created elements
     divEl.appendChild(labelName);
     divEl.appendChild(nameEnter);
     divEl.appendChild(submitButton);
