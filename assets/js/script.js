@@ -166,7 +166,7 @@ function clickDirect(event) {
     // game over options
     if(event.target.id == 5) {
         console.log("high score is " + score);
-        return;
+        createHighScore();
     }
     if(event.target.id == 6) 
         console.log("exiting!");
@@ -190,6 +190,9 @@ function answerValidation(choice) {
 function gameOver() {
     gameWin = false;
     score = timer;
+    if (score < 0) {
+        score = 0;
+    }
     timer = -1;
     console.log("Game Over!")
     timeDisplay.textContent = ""
@@ -210,6 +213,24 @@ function gameOver() {
     divEl.appendChild(exitButton);
     return;
 }
+
+function createHighScore() {
+    removeChildElements(divEl);
+    var labelName = document.createElement("label");
+    labelName.setAttribute("for", "player-name");
+    labelName.textContent = "Enter Name:";
+    var nameEnter = document.createElement("input");
+    nameEnter.setAttribute("type", "text") 
+    nameEnter.setAttribute("id", "player-name") 
+    nameEnter.setAttribute("name", "player-name");
+    var submitButton = document.createElement("input");
+    submitButton.setAttribute("type", "submit");
+    submitButton.setAttribute("value", "Submit");
+    divEl.appendChild(labelName);
+    divEl.appendChild(nameEnter);
+    divEl.appendChild(submitButton);
+}
+
 
 function createOptionsArray(answers) {
     // combine correct answer with the wrong answers
