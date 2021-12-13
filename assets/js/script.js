@@ -81,7 +81,7 @@ function countdown() {
             clearInterval(timerInterval);            
             gameOver();
         }
-        else if(timer >= 1) {
+        else if(timer > 0) {
             timerEl.textContent = "Time: " + timer;
             timer--;
         }
@@ -180,12 +180,19 @@ function clickDirect(event) {
 function answerValidation(choice) {
     if(choice === questionsArray[quizCounter].correct) {
         quizCounter++;
+        if (quizCounter > 0) {
+            removeLastChild(quizGame);
+        }
+        correct();
         quizQuestionsGen();
     }
     else {
         timer = timer - 15;
         quizCounter++;
-
+        if (quizCounter > 0) {
+            removeLastChild(quizGame);
+        }
+        incorrect();
         quizQuestionsGen();
     }
 }
@@ -193,6 +200,9 @@ function answerValidation(choice) {
 // end of game function
 function gameOver() {
     gameWin = false;
+    if (quizCounter > 0) {
+        removeLastChild(quizGame);
+    }
     scoreText = timer
     if (scoreText < 0) {
         scoreText = 0;
@@ -236,6 +246,37 @@ function displayHighScores () {
     oldUser = JSON.parse(oldUser);
     user.initials = user.initials.concat(oldUser.initials);
     user.score = user.score.concat(oldUser.score);
+}
+
+// add correct display function
+function correct() {
+    var correctH = document.createElement("h2")
+    correctH.className = ""
+    correctH.textContent = "Correct!"
+
+    // append to main section
+    quizGame.appendChild(correctH);
+}
+
+// add incorrect display function
+function incorrect() {
+    var incorrectH = document.createElement("h2")
+    incorrectH.className = ""
+    incorrectH.textContent = "Incorrect!"
+
+    // append to main section
+    quizGame.appendChild(incorrectH);
+}
+
+//remove last child function
+function removeLastChild(element) {
+    element.removeChild(element.lastChild);
+}
+
+
+// add display high scores function
+function createHighscoreEl() {
+
 }
 
 function checkNegative (array) {
