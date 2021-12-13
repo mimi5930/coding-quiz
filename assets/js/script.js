@@ -194,10 +194,11 @@ function answerValidation(choice) {
 function gameOver() {
     gameWin = false;
     scoreText = timer
-    user.score.push(timer);
-    if (user.score < 0) {
-        user.score = 0;
+    if (scoreText < 0) {
+        scoreText = 0;
     }
+    user.score.push(timer);
+    checkNegative(user.score);
     timer = -1;
     console.log("Game Over!")
     timeDisplay.textContent = ""
@@ -235,7 +236,14 @@ function displayHighScores () {
     oldUser = JSON.parse(oldUser);
     user.initials = user.initials.concat(oldUser.initials);
     user.score = user.score.concat(oldUser.score);
-    
+}
+
+function checkNegative (array) {
+    for ( i = 0; i < array.length; i++) {
+        if (array[i] < 0) {
+            array[i] = 0;
+        }
+    }
 }
 
 function createHighScore() {
