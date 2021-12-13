@@ -8,15 +8,19 @@ var quizP = document.querySelector(".quiz-descrip");
 var divEl = document.querySelector(".button-container")
 var timerEl = document.querySelector("#time-display");
 
-// variable to see if you're past the first question
+// sets what round/question to give
 var quizCounter = 0;
 
-// final score holder
-var score = 0;
 // timer length
 var timer = -1;
 // Answered all questions?
 var gameWin = false;
+
+// Object for local Storage:
+var user = {
+    initials: [],
+    score: []
+};
 
 // Quiz questions
 var firstQuestion = {
@@ -66,6 +70,7 @@ function startQuiz() {
         timer = 75;
         shuffle(questionsArray);
         countdown();
+        displayHighScores();
     }
     quizQuestionsGen();
 }
@@ -140,11 +145,6 @@ function quizQuestionsGen() {
     }
 }
 
-
-
-
-
-
 function clickDirect(event) {
     if(event.target.id == 0) {
         var chosenAnswer = questionsArray[quizCounter].options[event.target.id];
@@ -165,12 +165,16 @@ function clickDirect(event) {
 
     // game over options
     if(event.target.id == 5) {
-        console.log("high score is " + score);
+        console.log("high score is " + user.score);
         createHighScore();
     }
     if(event.target.id == 6) 
-        console.log("exiting!");
-        return;
+        location.reload();
+
+    if(event.target.id == 7) {
+        console.log("submit high scores!");
+        setInitials();
+    }
 }
 
 function answerValidation(choice) {
@@ -189,15 +193,16 @@ function answerValidation(choice) {
 // end of game function
 function gameOver() {
     gameWin = false;
-    score = timer;
-    if (score < 0) {
-        score = 0;
+    scoreText = timer
+    user.score.push(timer);
+    if (user.score < 0) {
+        user.score = 0;
     }
     timer = -1;
     console.log("Game Over!")
     timeDisplay.textContent = ""
     quizTitle.textContent = "Game Over!"
-    quizP.textContent = "Your score is: " + score;
+    quizP.textContent = "Your score is: " + scoreText;
     console.log(timer);
 
     var highScoreSave = document.createElement("button");
@@ -214,6 +219,25 @@ function gameOver() {
     return;
 }
 
+function setInitials() {
+    var userInput = document.getElementById("player-name").value;
+    user.initials.push(userInput);
+    console.log(user);
+    localStorage.setItem("user", JSON.stringify(user));
+    location.reload();
+}
+
+function displayHighScores () {
+    var oldUser = localStorage.getItem("user");
+    if (!oldUser) {
+        return false;
+    }
+    oldUser = JSON.parse(oldUser);
+    user.initials = user.initials.concat(oldUser.initials);
+    user.score = user.score.concat(oldUser.score);
+    
+}
+
 function createHighScore() {
     // reset the button-container div
     removeChildElements(divEl);
@@ -226,7 +250,9 @@ function createHighScore() {
     nameEnter.setAttribute("type", "text") 
     nameEnter.setAttribute("id", "player-name") 
     nameEnter.setAttribute("name", "player-name");
+    nameEnter.setAttribute("maxlength", 2);
     var submitButton = document.createElement("input");
+    submitButton.setAttribute("id", 7);
     submitButton.setAttribute("type", "submit");
     submitButton.setAttribute("value", "Submit");
 
