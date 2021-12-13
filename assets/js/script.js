@@ -260,9 +260,9 @@ function correct() {
 
 // add incorrect display function
 function incorrect() {
-    var incorrectH = document.createElement("h2")
-    incorrectH.className = ""
-    incorrectH.textContent = "Incorrect!"
+    var incorrectH = document.createElement("h2");
+    incorrectH.className = "";
+    incorrectH.textContent = "Incorrect!";
 
     // append to main section
     quizGame.appendChild(incorrectH);
@@ -276,7 +276,31 @@ function removeLastChild(element) {
 
 // add display high scores function
 function createHighscoreEl() {
+    var highscoreContainerEl = document.createElement("div");
+    highscoreContainerEl.className = "highscore-container"
+    
+    // title for high scores
+    var highscoreTitleEl = document.createElement("h2");
+    highscoreTitleEl.className = "";
+    highscoreTitleEl.textContent = "High Scores:"
 
+    // ordered list element
+    var highscoreListEl = document.createElement("ul");
+    highscoreListEl.className = "";
+
+    // function to create various high score elements
+    function createHighscoreEls() {
+        if (!user) {
+            // for loop that combines arrays into new, single array that pairs score with initials
+            // organize from highest to lowest
+            // for loop to create li items
+            // delete div
+            return false;
+        }
+        for (i = 0; i > user.initals.length; i++);
+        var displayHighscores = document.createElement("li");
+
+    }
 }
 
 function checkNegative (array) {
