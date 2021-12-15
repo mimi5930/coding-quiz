@@ -70,7 +70,7 @@ function startQuiz() {
         timer = 75;
         shuffle(questionsArray);
         countdown();
-        displayHighScores();
+        retrieveHighscores();
     }
     quizQuestionsGen();
 }
@@ -238,7 +238,7 @@ function setInitials() {
     location.reload();
 }
 
-function displayHighScores () {
+function retrieveHighscores () {
     var oldUser = localStorage.getItem("user");
     if (!oldUser) {
         return false;
@@ -276,6 +276,33 @@ function removeLastChild(element) {
 
 // add display high scores function
 function createHighscoreEl() {
+    // retrieve local data for save highscores
+    retrieveHighscores();
+
+    // check if any information is stored as highscores
+    if (user.initials === [] || user.score === []) {
+        return false;
+    }
+
+    // create an array that combines scores and initials together to be sorted
+    var combinedInitScore = Array(user.score[0] + user.initials[0]);
+    for (i = 1; i < user.score.length; i++) {
+        var concatArray = user.score[i] + user.initials[i];
+        combinedInitScore.push(concatArray);
+    }
+    
+    //sort combined score in ascending order
+    combinedInitScore.sort().reverse();
+
+    console.log(combinedInitScore);
+
+
+    //break apart
+
+    // put together into logical reading fashion
+    
+    // for loop to turn data into individual li items
+    
     var highscoreContainerEl = document.createElement("div");
     highscoreContainerEl.className = "highscore-container"
     
@@ -288,17 +315,21 @@ function createHighscoreEl() {
     var highscoreListEl = document.createElement("ul");
     highscoreListEl.className = "";
 
+
+    return;
+
     // function to create various high score elements
     function createHighscoreEls() {
         if (!user) {
-            // for loop that combines arrays into new, single array that pairs score with initials
-            // organize from highest to lowest
-            // for loop to create li items
-            // delete div
             return false;
         }
+        // organize from highest to lowest
+        // for loop to create li items
+        // delete div
+        
+
         for (i = 0; i > user.initals.length; i++);
-        var displayHighscores = document.createElement("li");
+        var createHighScores = document.createElement("li");
 
     }
 }
@@ -360,3 +391,4 @@ function removeChildElements(parent) {
 // eventlisteners
 quizButton.addEventListener("click", startQuiz);
 divEl.addEventListener("click", clickDirect);
+highscoresRef.addEventListener("click", createHighscoreEl);
