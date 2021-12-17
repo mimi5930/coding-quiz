@@ -7,6 +7,8 @@ var quizTitle = document.querySelector(".quiz-title");
 var quizP = document.querySelector(".quiz-descrip");
 var divEl = document.querySelector(".button-container")
 var timerEl = document.querySelector("#time-display");
+var header = document.querySelector(".header");
+var highscoresList = document.querySelector(".highscores")
 
 // sets what round/question to give
 var quizCounter = 0;
@@ -165,14 +167,12 @@ function clickDirect(event) {
 
     // game over options
     if(event.target.id == 5) {
-        console.log("high score is " + user.score);
         createHighScore();
     }
     if(event.target.id == 6) 
         location.reload();
 
     if(event.target.id == 7) {
-        console.log("submit high scores!");
         setInitials();
     }
 }
@@ -210,30 +210,31 @@ function gameOver() {
     user.score.push(timer);
     checkNegative(user.score);
     timer = -1;
-    console.log("Game Over!")
-    timeDisplay.textContent = ""
-    quizTitle.textContent = "Game Over!"
+    timeDisplay.textContent = "";
+    quizTitle.textContent = "Game Over!";
     quizP.textContent = "Your score is: " + scoreText;
-    console.log(timer);
 
     var highScoreSave = document.createElement("button");
-    highScoreSave.setAttribute("id", 5)
+    highScoreSave.setAttribute("id", 5);
     highScoreSave.className = "end-button";
     highScoreSave.textContent = "Save High Score";
     divEl.appendChild(highScoreSave);
 
     var exitButton = document.createElement("button");
-    exitButton.setAttribute("id", 6)
+    exitButton.setAttribute("id", 6);
     exitButton.className = "end-button";
     exitButton.textContent = "Exit";
     divEl.appendChild(exitButton);
-    return;
 }
 
 function setInitials() {
     var userInput = document.getElementById("player-name").value;
+    var symbols = /[!@#$%^&*()_+\-+\[\]{};'\\|,.<>\/?]+/
+    if (/\d/.test(userInput) || symbols.test(userInput) || userInput == "") {
+        alert("Please enter your initials!");
+        return;
+    }
     user.initials.push(userInput);
-    console.log(user);
     localStorage.setItem("user", JSON.stringify(user));
     location.reload();
 }
@@ -276,6 +277,10 @@ function removeLastChild(element) {
 
 // add display high scores function
 function createHighscoreEl() {
+    // remove button and Time Counter
+    quizGame.removeChild(divEl);
+    header.removeChild(timerEl);
+
     // retrieve local data for save highscores
     retrieveHighscores();
 
@@ -285,53 +290,45 @@ function createHighscoreEl() {
     }
 
     // create an array that combines scores and initials together to be sorted
-    var combinedInitScore = Array(user.score[0] + user.initials[0]);
-    for (i = 1; i < user.score.length; i++) {
-        var concatArray = user.score[i] + user.initials[i];
-        combinedInitScore.push(concatArray);
+    var combinedInitScore = [];
+    for (i = 0; i < user.score.length; i++) {
+        var pushArray = user.score[i] + user.initials[i];
+        combinedInitScore.push(pushArray);
     }
     
     //sort combined score in ascending order
     combinedInitScore.sort().reverse();
-
-    console.log(combinedInitScore);
-
-
-    //break apart
-
-    // put together into logical reading fashion
     
-    // for loop to turn data into individual li items
-    
-    var highscoreContainerEl = document.createElement("div");
-    highscoreContainerEl.className = "highscore-container"
-    
-    // title for high scores
-    var highscoreTitleEl = document.createElement("h2");
-    highscoreTitleEl.className = "";
-    highscoreTitleEl.textContent = "High Scores:"
-
-    // ordered list element
-    var highscoreListEl = document.createElement("ul");
-    highscoreListEl.className = "";
-
-
-    return;
-
-    // function to create various high score elements
-    function createHighscoreEls() {
-        if (!user) {
-            return false;
-        }
-        // organize from highest to lowest
-        // for loop to create li items
-        // delete div
-        
-
-        for (i = 0; i > user.initals.length; i++);
-        var createHighScores = document.createElement("li");
-
+    // reorganize data
+    // initials
+    var letter = [];
+    for (i = 0; i < combinedInitScore.length; i++) {
+        var nextletter = combinedInitScore[i].replace(/[^a-z]/gi, "");
+        letter.push(nextletter);
     }
+    // scores
+    var number = [];
+    for (i = 0; i < combinedInitScore.length; i++) {
+        var nextnumber = combinedInitScore[i].replace(/[^0-9]/g, "");
+        number.push(nextnumber);
+    }
+
+    // create turn data into li elements
+    var liElements = "";
+    for (i = 0; i < combinedInitScore.length; i++) {
+        liElements += "<li>" + letter[i] + ": " + number[i] + "</li>";
+    }
+    var highscoreOrderedList = document.createElement("ol");
+    highscoreOrderedList.innerHTML = liElements;
+
+    highscoresList.appendChild(highscoreOrderedList);
+
+    // title for high scores
+    quizTitle.textContent = "High Scores:";
+
+    var goBackButton = document.createElement("button")
+
+
 }
 
 function checkNegative (array) {
