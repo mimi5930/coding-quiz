@@ -27,38 +27,32 @@ var user = {
 // Quiz questions
 var firstQuestion = {
     title: "This is question 1",
-    name: "This is the question",
     options: ["a", "b", "c"],
     correct: "unique answer for 1"
 
 }
 var secondQuestion = {
     title: "This is question 2",
-    name: "Here is the question text",
     options: ["a", "b", "c"],
     correct: "unique answer for 2"
 }
 var thirdQuestion = {
     title: "This is question 3",
-    name: "Here is the question text",
     options: ["a", "b", "c"],
     correct: "unique answer 3"
 }
 var fourthQuestion = {
     title: "This is question 4",
-    name: "Here is the question text",
     options: ["a", "b", "c"],
     correct: "unique answer 4"
 }
 var fifthQuestion = {
     title: "This is question 5",
-    name: "Here is the question text",
     options: ["a", "b", "c"],
     correct: "unique answer 5"
 }
 var sixthQuestion = {
     title: "This is question 6",
-    name: "Here is the question text",
     options: ["a", "b", "c"],
     correct: "unique answer 6"
 }
@@ -70,6 +64,7 @@ function startQuiz() {
     //shuffle question order
     if(quizCounter === 0) {
         timer = 75;
+        quizGame.removeChild(quizP);
         shuffle(questionsArray);
         countdown();
         retrieveHighscores();
@@ -110,9 +105,8 @@ function quizQuestionsGen() {
 
     removeChildElements(divEl);
 
-    // update question number and question
+    // update question
     quizTitle.textContent = questionsArray[quizCounter].title;
-    quizP.textContent = questionsArray[quizCounter].name;
     
     // combine wrong answers with correct
     createOptionsArray(questionsArray[quizCounter]);
@@ -213,6 +207,7 @@ function gameOver() {
     timeDisplay.textContent = "";
     quizTitle.textContent = "Game Over!";
     quizP.textContent = "Your score is: " + scoreText;
+    quizGame.insertBefore(quizP, divEl);
 
     var highScoreSave = document.createElement("button");
     highScoreSave.setAttribute("id", 5);
@@ -322,9 +317,10 @@ function createHighscoreEl() {
     // create turn data into li elements
     var liElements = "";
     for (i = 0; i < combinedInitScore.length; i++) {
-        liElements += "<li>" + letter[i] + ": " + number[i] + "</li>";
+        liElements += "<li class='highscore-li'>" + letter[i] + ": " + number[i] + "</li>";
     }
     var highscoreOrderedList = document.createElement("ol");
+    highscoreOrderedList.className = "highscore-ol"
     highscoreOrderedList.innerHTML = liElements;
 
     highscoresList.appendChild(highscoreOrderedList);
@@ -379,14 +375,18 @@ function createHighScore() {
 
     // create the input elements for submitting initials 
     var labelName = document.createElement("label");
+    labelName.className = "initials-text"
     labelName.setAttribute("for", "player-name");
     labelName.textContent = "Enter Initials:";
+
     var nameEnter = document.createElement("input");
     nameEnter.setAttribute("type", "text") 
     nameEnter.setAttribute("id", "player-name") 
     nameEnter.setAttribute("name", "player-name");
     nameEnter.setAttribute("maxlength", 2);
+
     var submitButton = document.createElement("input");
+    submitButton.className = "submit-button"
     submitButton.setAttribute("id", 7);
     submitButton.setAttribute("type", "submit");
     submitButton.setAttribute("value", "Submit");
@@ -423,4 +423,4 @@ function removeChildElements(parent) {
 quizButton.addEventListener("click", startQuiz);
 divEl.addEventListener("click", clickDirect);
 highscoresRef.addEventListener("click", createHighscoreEl);
-highscoresList.addEventListener("click", highscoreClick)
+highscoresList.addEventListener("click", highscoreClick);
