@@ -277,9 +277,15 @@ function removeLastChild(element) {
 
 // add display high scores function
 function createHighscoreEl() {
+    // stop the countdown if game has started
+    gameWin = true
+
     // remove button and Time Counter
     quizGame.removeChild(divEl);
+    header.removeChild(highscoresRef);
+    quizGame.removeChild(quizP);
     header.removeChild(timerEl);
+
 
     // retrieve local data for save highscores
     retrieveHighscores();
@@ -326,10 +332,38 @@ function createHighscoreEl() {
     // title for high scores
     quizTitle.textContent = "High Scores:";
 
-    var goBackButton = document.createElement("button")
+    var goBackButton = document.createElement("button");
+    goBackButton.textContent = "Go Back"
+    goBackButton.className = "highscores-button";
+    goBackButton.setAttribute("id", "go-back-button");
 
+    var clearHighScoresButton = document.createElement("button");
+    clearHighScoresButton.textContent = "Clear Highscores"
+    clearHighScoresButton.className = "highscores-button";
+    clearHighScoresButton.setAttribute("id", "clear-scores-button");
 
+    highscoresList.appendChild(goBackButton);
+    highscoresList.appendChild(clearHighScoresButton);
 }
+
+function highscoreClick(event) {
+    if (event.target.id === "go-back-button") {
+        pageRefresh();
+    }
+    if (event.target.id === "clear-scores-button") {
+        resetStorage();
+    }
+}
+
+function pageRefresh() {
+    location.reload()
+}
+
+function resetStorage() {
+    localStorage.clear()
+    location.reload()
+}
+
 
 function checkNegative (array) {
     for ( i = 0; i < array.length; i++) {
@@ -389,3 +423,4 @@ function removeChildElements(parent) {
 quizButton.addEventListener("click", startQuiz);
 divEl.addEventListener("click", clickDirect);
 highscoresRef.addEventListener("click", createHighscoreEl);
+highscoresList.addEventListener("click", highscoreClick)
