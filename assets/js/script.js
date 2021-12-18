@@ -8,7 +8,7 @@ var quizP = document.querySelector(".quiz-descrip");
 var divEl = document.querySelector(".button-container")
 var timerEl = document.querySelector("#time-display");
 var header = document.querySelector(".header");
-var highscoresList = document.querySelector(".highscores")
+var highscoresList = document.querySelector(".highscores");
 
 // sets what round/question to give
 var quizCounter = 0;
@@ -78,7 +78,7 @@ function countdown() {
         if(stopCount) {
             clearInterval(timerInterval);
         }
-        if(gameWin) {
+        else if(gameWin) {
             clearInterval(timerInterval);            
             gameOver();
         }
@@ -86,7 +86,7 @@ function countdown() {
             timerEl.textContent = "Time: " + timer;
             timer--;
         }
-        else if(timer = 0) {
+        else if(timer === 0) {
             timerEl.textContent = "Game Over!"
             clearInterval(timerInterval);
             gameOver();  
@@ -185,13 +185,19 @@ function answerValidation(choice) {
         quizQuestionsGen();
     }
     else {
+        if (timer > 15) {
         timer = timer - 15;
+        }
+        else {
+            timer = 0;
+        }
         quizCounter++;
         if (quizCounter > 0) {
             removeLastChild(quizGame);
         }
         incorrect();
         quizQuestionsGen();
+    
     }
 }
 
@@ -199,6 +205,7 @@ function answerValidation(choice) {
 function gameOver() {
     gameWin = false;
     header.removeChild(highscoresRef);
+    removeChildElements(divEl);
     if (quizCounter > 0) {
         removeLastChild(quizGame);
     }
