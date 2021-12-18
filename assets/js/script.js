@@ -27,35 +27,35 @@ var user = {
 
 // Quiz questions
 var firstQuestion = {
-    title: "This is question 1",
-    options: ["a", "b", "c"],
-    correct: "unique answer for 1"
+    title: "Which is not a falsy value?",
+    options: ["0", "false", '""',],
+    correct: "incorrect"
 
 }
 var secondQuestion = {
-    title: "This is question 2",
-    options: ["a", "b", "c"],
-    correct: "unique answer for 2"
+    title: 'Which symbol is used as an "id selector"?',
+    options: [".", "$", "!"],
+    correct: "#"
 }
 var thirdQuestion = {
-    title: "This is question 3",
-    options: ["a", "b", "c"],
-    correct: "unique answer 3"
+    title: "What is the name of VSC's abreviation shortcuts?",
+    options: ["DAVE", "BRIAN", "EMILIO"],
+    correct: "EMMET"
 }
 var fourthQuestion = {
-    title: "This is question 4",
-    options: ["a", "b", "c"],
-    correct: "unique answer 4"
+    title: "Which element allows you to use JavaScript in an HTML document?",
+    options: ["<link>", "<href>", "<meta>"],
+    correct: "<script>"
 }
 var fifthQuestion = {
-    title: "This is question 5",
-    options: ["a", "b", "c"],
-    correct: "unique answer 5"
+    title: 'How would you reference the class name "title-slide" in css?',
+    options: ["#title-slide", "<title-slide>", 'class="title-slide"'],
+    correct: ".title-slide"
 }
 var sixthQuestion = {
-    title: "This is question 6",
-    options: ["a", "b", "c"],
-    correct: "unique answer 6"
+    title: 'How would you create a git branch named "feature/data-validation" AND switch over to that branch',
+    options: ["git checkout feature/data-validation", "git -b feature/data-validation", "git branch feature/data-validation"],
+    correct: "gith checkout -b feature/data-validation"
 }
 
 //combine questions into an array
