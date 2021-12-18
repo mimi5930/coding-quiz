@@ -198,6 +198,7 @@ function answerValidation(choice) {
 // end of game function
 function gameOver() {
     gameWin = false;
+    header.removeChild(highscoresRef);
     if (quizCounter > 0) {
         removeLastChild(quizGame);
     }
