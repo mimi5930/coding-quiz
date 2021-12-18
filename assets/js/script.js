@@ -12,6 +12,7 @@ var highscoresList = document.querySelector(".highscores")
 
 // sets what round/question to give
 var quizCounter = 0;
+var stopCount = false;
 
 // timer length
 var timer = -1;
@@ -74,6 +75,9 @@ function startQuiz() {
 
 function countdown() {
     var timerInterval = setInterval(function() {
+        if(stopCount) {
+            clearInterval(timerInterval);
+        }
         if(gameWin) {
             clearInterval(timerInterval);            
             gameOver();
@@ -272,23 +276,16 @@ function removeLastChild(element) {
 
 // add display high scores function
 function createHighscoreEl() {
-    // stop the countdown if game has started
-    gameWin = true
+    //stop counter
+    stopCount = true;
 
     // remove button and Time Counter
-    quizGame.removeChild(divEl);
-    header.removeChild(highscoresRef);
-    quizGame.removeChild(quizP);
-    header.removeChild(timerEl);
-
+    removeChildElements(quizGame)
+    removeChildElements(timerEl)
+    removeChildElements(header)
 
     // retrieve local data for save highscores
     retrieveHighscores();
-
-    // check if any information is stored as highscores
-    if (user.initials === [] || user.score === []) {
-        return false;
-    }
 
     // create an array that combines scores and initials together to be sorted
     var combinedInitScore = [];
@@ -326,7 +323,9 @@ function createHighscoreEl() {
     highscoresList.appendChild(highscoreOrderedList);
 
     // title for high scores
-    quizTitle.textContent = "High Scores:";
+    var highscoreTitle = document.createElement("h1");
+    highscoreTitle.className = "highscore-title"
+    highscoreTitle.textContent = "High Scores:";
 
     var goBackButton = document.createElement("button");
     goBackButton.textContent = "Go Back"
@@ -338,6 +337,8 @@ function createHighscoreEl() {
     clearHighScoresButton.className = "highscores-button";
     clearHighScoresButton.setAttribute("id", "clear-scores-button");
 
+    // append it all
+    header.appendChild(highscoreTitle);
     highscoresList.appendChild(goBackButton);
     highscoresList.appendChild(clearHighScoresButton);
 }
